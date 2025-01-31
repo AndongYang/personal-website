@@ -61,17 +61,23 @@
 
       <div id="filters" class="button-group">
         <!-- <button class="button" data-filter="*">Show All</button> -->
-        <button class="button is-checked" data-filter=".highlight">Highlights</button>
+        <button class="button is-checked" data-filter=".highlight">Home</button>
         <button class="button" data-filter=".publication">Research</button>
         <button class="button" data-filter=".talk">Talks</button>
         <button class="button" data-filter=".misc">Misc</button>
       </div>
 
       <div class="grid">
+        
+        <!-- Preview Videos -->
+        <div class="list-item highlight previews" data-category="highlight">
+          <img src="images/RAL2024.gif" alt="preview1" />
+          <img src="images/postVedio.gif" alt="preview2" />
+          <a href="https://tossingbot.cs.princeton.edu/"><video class="preview3" playsinline="" muted="" autoplay="" loop=""><source src="images/video-tossingbot-crop.mp4" type="video/mp4"></video></a>
+        </div>
 
         <!-- Highlights -->
         <div class="list-item highlight description" data-category="highlight">
-          Some recent highlights from our research:
           <h2 style="color: #6B8E23;" class="intro1">News</h2> 
           <ul>
             <li>2024.11 One papers accepted to WACV</li>
@@ -86,18 +92,18 @@
             <li>2022.11	New patent CN115453880A</li>
             <li>2022.6 One papers accepted to IROS</li>
           </ul>
-          <h2 style="color: #FFB84D;" class="intro1">Honors and Awards</h2> 
+          <h2 style="color: #6B8E23;" class="intro1">Honors and Awards</h2> 
           <ul>
             <li>2022 World Intelligent Driving Challenge: Second prize in the obstacle avoidance and highway driving</li>
             <li>2020-2022 Academic First Class Scholarship in ICT, CAS</li>
             <li>2022-2023 Merit Student in ICT, CAS</li>
           </ul>
-          <h2 style="color: #FFB84D;" class="intro1">Educations</h2> 
+          <h2 style="color: #6B8E23;" class="intro1">Educations</h2> 
           <ul>
             <li>2019.06 - (now), Ph.D, Institute of Computing Technology, Chinese Academic of Science, Beijing</li>
             <li>2015.09 - 2019.06, Undergraduate, Dalian University of Technology, Dalian</li>
           </ul>
-          <h2 style="color: #FFB84D;" class="intro1">Professional Services</h2> 
+          <h2 style="color: #6B8E23;" class="intro1">Professional Services</h2> 
           <ul>
             <li>Reviewer for the IEEE International Conference on Robotics and Automation (ICRA)-24</li>
             <li>Reviewer for the IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)-23</li>
@@ -107,16 +113,7 @@
           </ul>
         </div>
        
-        <!-- Preview Videos -->
-        <div class="list-item highlight previews" data-category="highlight">
-
-          <a href="https://palm-e.github.io/"><video class="preview1" playsinline="" muted="" autoplay="" loop=""><source src="images/video-palm-e.mp4" type="video/mp4"></video></a>
-
-          <a href="https://say-can.github.io/"><video class="preview2" playsinline="" muted="" autoplay="" loop=""><source src="images/video-saycan.mp4" type="video/mp4"></video></a>
-
-          <a href="https://tossingbot.cs.princeton.edu/"><video class="preview3" playsinline="" muted="" autoplay="" loop=""><source src="images/video-tossingbot-crop.mp4" type="video/mp4"></video></a>
-
-        </div>
+        
 
         <!-- Truncated Set of Highlights (Shown by Default) -->
         <div id="main-highlights">
