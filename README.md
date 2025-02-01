@@ -1,1 +1,1 @@
-Under construction ![](/assets/img/working.gif)
+This is the code for [Andong Yang](https://andongyang.github.io)'s academic website. The website template was borrowed from [Andy Zeng](https://andyzeng.github.io/), which inspired by [Jon's website](https://jonbarron.info/).

@@ -1,0 +1,355 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <!-- Google analytics tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-9H53ZMR8XD"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-9H53ZMR8XD');
+    </script>
+
+    <!-- Title -->
+    <title>Andong Yang</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=1000">
+
+    <!-- Isotope JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
+    <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
+
+    <!-- Custom Style -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Asap:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Asap:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
+    </style>
+  </head>
+
+  <body id="body">
+
+    <div id="main">
+      <div id="intro">
+        <div id="intro-text">
+          <h1>Andong Yang</h1>
+          <p>
+            Hi there! I am a PhD student at the Institute of Computing Technology, Chinese Academy of Sciences, where I enjoy assembling new robots and studying algorithms to make robots more powerful. My research focuses on bringing robots to work in challenging environments. These days, I'm interested in training neural networks to allocate tasks for a heterogeneous multi-robot system.
+            <div id="more-bio" style="display: None">
+              <br>
+              <p>Andong Yang is a PhD student at the Institute of Computing Technology, Chinese Academy of Sciences, where he studying on motion planning and control in robotics. He is interested in building machines and algorithms that enable robots to intelligently operate in chenllenging environments. Andong has published papers in leading robotics conferences and journals, including IROS, ICRA, and RA-L. He has also served as a reviewer for ICRA and IROS, and has been awarded the Academic First Class Scholarship.</p>
+            </div>
+            <br>
+            <a href="javascript:toggle_bio()">Formal Bio</a>&nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="https://github.com/AndongYang">Github</a>&nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="https://scholar.google.com/citations?user=t1Nzqx4AAAAJ&hl=en&authuser=1">G. Scholar</a>&nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="https://www.linkedin.com/in/andongyang/">LinkedIn</a>&nbsp;&nbsp;&nbsp;&nbsp;
+            <br><br>
+            andongyang24 at gmail dot com
+            <br><br>
+          </p>
+        </div>
+        <div id="intro-image">
+          <img src="images/profile.jpg">
+        </div>
+      </div>
+
+      <div id="filters" class="button-group">
+        <!-- <button class="button" data-filter="*">Show All</button> -->
+        <button class="button is-checked" data-filter=".highlight">Home</button>
+        <button class="button" data-filter=".publication">Research</button>
+        <button class="button" data-filter=".talk">Projects</button>
+        <button class="button" data-filter=".misc">Misc</button>
+      </div>
+
+      <div class="grid">
+        
+        <!-- Preview Videos 360*240px -->
+        <div class="list-item highlight previews" data-category="highlight">
+          <a><video class="preview1" playsinline="" muted="" autoplay="" loop=""><source src="images/preview1.mp4" type="video/mp4"></video></a>
+          <a><video class="preview2" playsinline="" muted="" autoplay="" loop=""><source src="images/preview2.mp4" type="video/mp4"></video></a>
+          <a><video class="preview3" playsinline="" muted="" autoplay="" loop=""><source src="images/preview3.mp4" type="video/mp4"></video></a>
+        </div>
+
+        <!-- Highlights -->
+        <div class="list-item highlight description" data-category="highlight">
+          <h2 style="color: #6B8E23;" class="intro1">Honors and Awards</h2> 
+          <ul>
+            <li>2022 World Intelligent Driving Challenge: Second prize in the obstacle avoidance and highway driving</li>
+            <li>2020-2022 Academic First Class Scholarship in ICT, CAS</li>
+            <li>2022-2023 Merit Student in ICT, CAS</li>
+          </ul>
+          <h2 style="color: #6B8E23;" class="intro1">Educations</h2> 
+          <ul>
+            <li>2019.06 - (now), Ph.D, Institute of Computing Technology, Chinese Academic of Science, Beijing</li>
+            <li>2015.09 - 2019.06, Undergraduate, Dalian University of Technology, Dalian</li>
+          </ul>
+          <h2 style="color: #6B8E23;" class="intro1">Professional Services</h2> 
+          <ul>
+            <li>Reviewer for the IEEE International Conference on Robotics and Automation (ICRA)-24</li>
+            <li>Reviewer for the IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)-23</li>
+            <li>TA: Computer Architecture</li>
+            <li>Member of the Career Development Association of ICT, CAS</li>
+            <li>Member of the Student Union of the University of Chinese Academy of Sciences</li>
+          </ul>
+        </div>
+
+        <!-- Truncated Set of Highlights (Shown by Default) -->
+        <div id="main-highlights">
+
+          <div class="list-item highlight" data-category="highlight">
+            <b>2024.11</b> <a>One papers accepted to WACV</a>
+          </div>
+
+          <div class="list-item highlight" data-category="highlight">
+            <b>2024.6</b> <a href="https://ieeexplore.ieee.org/document/10801626">One papers accepted to IROS</a>
+          </div>
+          
+          <div class="list-item highlight" data-category="highlight">
+            <b>2024.4</b> <a>I'm working on developing a multiple robots system</a>
+          </div>
+
+          <div class="list-item highlight" data-category="highlight">
+            <b>2024.2</b> <a href="https://ieeexplore.ieee.org/document/10611055/">One papers accepted to ICRA</a>
+          </div>
+        </div>
+
+        <!-- All Archived Highlights (Click to Show) -->
+        <div id="more-highlights" style="display: None">
+          
+          <div class="list-item highlight" data-category="highlight">
+            <p class="date">2024</p> <a>One papers accepted to WACV</a>
+          </div>
+
+          <div class="list-item highlight" data-category="highlight">
+            <p class="date"></p> <a href="https://ieeexplore.ieee.org/document/10801626">One papers accepted to IROS</a>
+          </div>
+
+          <div class="list-item highlight" data-category="highlight">
+            <p class="date"></p> <a href="https://ieeexplore.ieee.org/document/10611055/">One papers accepted to ICRA</a>
+          </div>
+
+          <div class="list-item highlight" data-category="highlight">
+            <p class="date"></p> <a href="https://ieeexplore.ieee.org/document/10400920">One papers accepted to RA-L</a>
+          </div>
+
+          <div class="list-item highlight" data-category="highlight">
+            <p class="date">2023</p>  <a>New patent 202311229497.X</a>
+          </div>
+
+          <div class="list-item highlight" data-category="highlight">
+            <p class="date"></p> <a>One papers accepted to IROS</a>
+          </div>
+
+          <div class="list-item highlight" data-category="highlight">
+            <p class="date">2022</p> <a>New patent CN115453880A</a>
+          </div>
+
+          <div class="list-item highlight" data-category="highlight">
+            <p class="date"></p> <a>One papers accepted to IROS</a>
+          </div>
+
+        </div>
+
+        <!-- Toggle highlights button. -->
+        <div class="list-item highlight toggle-button" data-category="highlight">
+          <a id="toggle_highlights_button" href="javascript:toggle_highlights()">Show more</a>
+        </div>
+
+
+        <!-- Publications -->
+        <div class="list-item publication" data-category="publication">
+          <a href="https://ieeexplore.ieee.org/document/10801626" class="thumbnail">
+            <img src="images/p4.jpg" alt="" />
+          </a>
+          <div class="project-description">
+            <h3><a href="https://ieeexplore.ieee.org/document/10801626">SCOML: Trajectory Planning Based on Self-Correcting Meta-Reinforcement Learning in Hybrid Terrain for Mobile Robot</a></h3>
+            <p>
+              Andong Yang; Wei Li; Yu Hu<br>
+                <i>IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS) 2024</i><br>
+                <!-- <font color="49bf9"><i>&#9733; Best Paper Award, HRI &#9733;</i></font><br> -->
+                <a href="https://ieeexplore.ieee.org/document/10801626">PDF</a>
+                <br> <!-- TODO: extra spaces until I figure out the margin bug. -->
+            </p>
+          </div>
+        </div>
+
+        <div class="list-item publication" data-category="publication">
+          <a href="https://ieeexplore.ieee.org/document/10611055" class="thumbnail">
+            <img src="images/ICRA2024.jpg" alt="" />
+          </a>
+          <div class="project-description">
+            <h3><a href="https://ieeexplore.ieee.org/document/10611055">F3DMP: Foresighted 3D Motion Planning of Mobile Robots in Wild Environments</a></h3>
+            <p>
+              Andong Yang; Wei Li; Yu Hu<br>
+              <i>IEEE International Conference on Robotics and Automation (ICRA) 2024</i><br>
+                <a href="https://ieeexplore.ieee.org/document/10611055">PDF</a>
+                <br> <!-- TODO: extra spaces until I figure out the margin bug. -->
+            </p>
+          </div>
+        </div>
+
+        <div class="list-item publication" data-category="publication">
+          <a href="https://ieeexplore.ieee.org/document/10400920" class="thumbnail">
+            <video playsinline="" muted="" autoplay="" loop="" width="180px">
+              <source src="images/preview1.mp4" type="video/mp4">
+            </video>
+          </a>
+          <div class="project-description">
+            <h3><a href="https://ieeexplore.ieee.org/document/10400920">Speed Planning Based on Terrain-Aware Constraint Reinforcement Learning in Rugged Environments</a></h3>
+            <p>
+              Andong Yang; Wei Li; Yu Hu<br>
+              <i>IEEE Robotics and Automation Letters (RA-L) 2024</i><br>
+                <a href="https://ieeexplore.ieee.org/document/10400920">PDF</a>
+                <br> <!-- TODO: extra spaces until I figure out the margin bug. -->
+            </p>
+          </div>
+        </div>
+
+        <div class="list-item publication" data-category="publication">
+          <a href="https://ieeexplore.ieee.org/document/10341780" class="thumbnail">
+            <img src="images/iros2023.jpg" alt="" />
+          </a>
+          <div class="project-description">
+            <h3><a href="https://ieeexplore.ieee.org/document/10341780">Active Visual SLAM Based on Hierarchical Reinforcement Learning</a></h3>
+            <p>
+              Wensong Chen; Wei Li; Andong Yang; Yu Hu<br>
+              <i>IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS) 2023</i><br>
+                <a href="https://ieeexplore.ieee.org/document/10341780">PDF</a>
+                <br> <!-- TODO: extra spaces until I figure out the margin bug. -->
+            </p>
+          </div>
+        </div>
+
+        <div class="list-item publication" data-category="publication">
+          <a href="https://ieeexplore.ieee.org/document/9981289" class="thumbnail">
+            <img src="images/p1.jpg" alt="" />
+          </a>
+          <div class="project-description">
+            <h3><a href="https://ieeexplore.ieee.org/document/9981289">SMS-MPC: Adversarial Learning-based Simultaneous Prediction Control with Single Model for Mobile Robots</a></h3>
+            <p>
+              Wensong Chen; Wei Li; Andong Yang; Yu Hu<br>
+              <i>IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS) 2022</i><br>
+              <!-- <a href="https://xxxx">Webpage</a>&nbsp;&nbsp;&bull;&nbsp;&nbsp; -->
+                <a href="https://ieeexplore.ieee.org/document/9981289">PDF</a>
+                <br> <!-- TODO: extra spaces until I figure out the margin bug. -->
+            </p>
+          </div>
+        </div>
+
+
+        <!-- Talks -->
+        <div class="list-item talk previews" data-category="talk">
+          <img src="images/talkpreview.jpg" alt="Building a self-driving car" width="840px">
+        </div>
+
+        <div class="list-item talk" data-category="talk">
+          <p class="date">2023</p>Global path planning based on satellite images
+        </div>
+
+        <div class="list-item talk" data-category="talk">
+          <p class="date">2022</p>Building a self-driving car
+        </div>
+
+
+        <!-- Services -->
+        <div class="list-item misc" data-category="misc">
+          <p class="date">2024</p> [blog] <a href="https://andongyang.github.io/blog/2024/ToolsForSearchingResearchPapers/">Tools for Finding Research Papers</a>
+        </div>
+
+      </div>
+
+      <div id="footer">The website template was borrowed from <a href="https://github.com/andyzeng/andyzeng.github.io">Andy</a> and <a href="https://jonbarron.info/">Jon</a>.</div>
+
+    </div>
+
+    <script>
+
+      // Isotope grid.
+      var $grid = $('.grid').isotope({
+        itemSelector: '.list-item',
+        layoutMode: 'fitRows',
+        transitionDuration: 0,
+        stagger: 10,
+        initLayout: false,
+        getSortData: {
+          name: '.name',
+          symbol: '.symbol',
+          number: '.number parseInt',
+          category: '[data-category]',
+          weight: function( itemElem ) {
+            var weight = $( itemElem ).find('.weight').text();
+            return parseFloat( weight.replace( /[\(\)]/g, '') );
+          }
+        }
+      });
+
+      // Bind filter button click.
+      $('#filters').on( 'click', 'button', function() {
+        var filterValue = $( this ).attr('data-filter');
+        localStorage.setItem('filterValue', filterValue);
+        $grid.isotope({ filter: filterValue });
+      });
+
+      // Change is-checked class on buttons.
+      $('.button-group').each( function( i, buttonGroup ) {
+        var $buttonGroup = $( buttonGroup );
+        $buttonGroup.on( 'click', 'button', function() {
+          $buttonGroup.find('.is-checked').removeClass('is-checked');
+          $( this ).addClass('is-checked');
+        });
+      });
+
+      function update_isotope() {
+        // Retrieve cached button click.
+        var defaultFilterValue = localStorage.getItem('filterValue');
+        if (defaultFilterValue == null) {
+          defaultFilterValue = ".highlight"
+        }
+        $grid.isotope({ filter: defaultFilterValue });
+        var buttons = document.getElementsByClassName("button");
+        for (var currButton of buttons) {
+          if (currButton.getAttribute('data-filter') == defaultFilterValue) {
+            currButton.classList.add('is-checked');
+          } else {
+            currButton.classList.remove('is-checked');
+          }
+        }
+      }
+
+      function toggle_bio() {
+        var x = document.getElementById("more-bio");
+        if (x.style.display === "none") {
+          x.style.display = "block";
+        } else {
+          x.style.display = "none";
+        }
+      }
+
+      function toggle_highlights() {
+        var x = document.getElementById("main-highlights");
+        var y = document.getElementById("more-highlights");
+        var b = document.getElementById("toggle_highlights_button")
+        if (y.style.display === "none") {
+          x.style.display = "none";
+          y.style.display = "block";
+          b.innerHTML = "Show less"
+          update_isotope();
+        } else {
+          x.style.display = "block";
+          y.style.display = "none";
+          b.innerHTML = "Show more"
+          update_isotope();
+        }
+      }
+
+      update_isotope();
+
+    </script>
+  </body>
+</html>
