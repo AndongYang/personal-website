@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>我的博客</title>
+    <title>Blog</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -12,22 +12,26 @@
             background-color: #f4f4f4;
         }
         header {
-            background-color: #333;
-            color: white;
-            padding: 10px 20px;
-            text-align: left;
+            padding: 0;
         }
         header a {
-            color: white;
+            color: #007bff; /* 蓝色 */
             text-decoration: none;
             font-size: 18px;
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+        header a:hover {
+            text-decoration: underline;
         }
         main {
-            padding: 20px;
+            padding: 60px 20px 20px 20px; /* 给上方留出空间，以便显示返回链接 */
             background-color: white;
             max-width: 800px;
             margin: 20px auto;
             border-radius: 8px;
+            position: relative;
         }
         h1 {
             font-size: 2.5em;
@@ -60,7 +64,7 @@
 <body>
 
 <header>
-    <a href="index.html">Home</a>
+    <a href="../index.html">Home</a>
 </header>
 
 <main>
