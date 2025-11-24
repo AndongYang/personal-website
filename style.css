@@ -236,7 +236,7 @@ h2 {
 }
 
 .toggle-button a:hover {
-  color: rgb(20, 110, 190);
+  color: #3EB489 ; 
 }
 
 /**************************************************/
@@ -303,50 +303,5 @@ h3 a:hover {
   position: absolute;
   bottom: 0;
   line-height: 2.5em;
-}
-
-/* === Safe Green Theme Override === */
-:root {
-  --theme-green: #3EB489;
-  --theme-green-dark: #2A8A6C;
-}
-
-/* Link colors */
-a {
-  color: var(--theme-green) !important;
-}
-
-a:hover {
-  border-bottom: 1px solid var(--theme-green) !important;
-}
-
-/* h3 links hover */
-h3 a:hover {
-  color: var(--theme-green) !important;
-}
-
-/* Show more / less toggle button */
-.toggle-button a:hover {
-  color: var(--theme-green) !important;
-}
-
-/* Selected section title */
-.selected h2 {
-  color: var(--theme-green) !important;
-}
-
-/* Main heading h1 */
-h1 {
-  color: var(--theme-green) !important;
-}
-
-/* Buttons hover and active */
-.button:hover {
-  color: var(--theme-green) !important;
-}
-
-.button:active,
-.button.is-checked {
-  color: var(--theme-green-dark) !important;
 }
 
