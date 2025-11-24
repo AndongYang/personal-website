@@ -62,12 +62,12 @@ table {
 
 a {
   text-decoration: none;
-  color: rgb(20, 110, 190);
+  color: #3EB489;
 }
 
 a:hover {
   text-decoration: none;
-  border-bottom: 1px solid rgb(20, 110, 190);
+  border-bottom: 1px solid #2A8A6C;
 }
 
 i {
