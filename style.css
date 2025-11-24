@@ -304,3 +304,31 @@ h3 a:hover {
   bottom: 0;
   line-height: 2.5em;
 }
+
+:root {
+  --theme-green: #3EB489;
+}
+
+/* link color */
+a {
+  color: var(--theme-green) !important;
+}
+
+a:hover {
+  border-bottom: 1px solid var(--theme-green) !important;
+}
+
+/* h3 hover */
+h3 a:hover {
+  color: var(--theme-green) !important;
+}
+
+/* show more/less */
+.toggle-button a:hover {
+  color: var(--theme-green) !important;
+}
+
+/* selected section title */
+.selected h2 {
+  color: var(--theme-green) !important;
+}
