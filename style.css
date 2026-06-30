@@ -306,9 +306,6 @@ h3 a:hover {
 .gantt-scroll {
   overflow-x: auto;
   overflow-y: hidden;
-  border: 1px solid #e2e6ea;
-  border-radius: 8px;
-  background: #fff;
   scrollbar-width: thin;
   scrollbar-color: #c5cdd4 transparent;
 }
