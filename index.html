@@ -352,6 +352,7 @@
                 </div>
 
                 <div class="gantt-bridge">
+                  <!-- Optional: add data-card-x="45" on any .gantt-detail to place that card manually (percent along timeline). -->
                   <div class="gantt-details">
                     <div class="gantt-detail">
                       <div class="gantt-card">
@@ -542,9 +543,9 @@
 
         var monthCount = (rangeEnd.getFullYear() - rangeStart.getFullYear()) * 12
           + (rangeEnd.getMonth() - rangeStart.getMonth());
-        canvas.style.minWidth = Math.max(84, monthCount * 1.35) + 'em';
+        canvas.style.minWidth = Math.max(96, monthCount * 1.75) + 'em';
 
-        canvas.querySelectorAll('.gantt-bars .gantt-project').forEach(function(project, index) {
+        canvas.querySelectorAll('.gantt-bars .gantt-project').forEach(function(project) {
           var bar = project.querySelector('.gantt-bar');
           if (!bar) return;
 
@@ -571,48 +572,31 @@
         var bodyWidth = body.offsetWidth;
         if (bodyWidth === 0) bodyWidth = canvas.offsetWidth;
 
-        var cardWidths = [];
-        details.forEach(function(detail) {
-          var width = detail.offsetWidth;
-          cardWidths.push(width > 0 ? width : 184);
-        });
-
         var anchorXs = [];
         bars.forEach(function(bar) {
           anchorXs.push((parseFloat(bar.dataset.anchor) / 100) * bodyWidth);
         });
 
-        var placements = resolveGanttCardPlacements(anchorXs, cardWidths, bodyWidth);
-
-        details.forEach(function(detail, index) {
-          var placement = placements[index];
-          detail.style.left = (placement.x / bodyWidth * 100) + '%';
-          detail.style.top = placement.row * placement.rowStride + 'px';
-        });
-
-        var rowHeights = [];
-        details.forEach(function(detail, index) {
-          var row = placements[index].row;
-          rowHeights[row] = Math.max(rowHeights[row] || 0, detail.offsetHeight);
-        });
-
-        var measuredHeights = rowHeights.filter(function(height) { return height > 0; });
-        var tallestCard = measuredHeights.length ? Math.max.apply(null, measuredHeights) : 88;
-        var rowStride = Math.max(88, tallestCard + 12);
-        placements.forEach(function(placement) {
-          placement.rowStride = rowStride;
-        });
-
-        details.forEach(function(detail, index) {
-          detail.style.top = placements[index].row * rowStride + 'px';
-        });
-
-        var totalHeight = 0;
-        for (var row = 0; row < rowHeights.length; row++) {
-          if (row > 0) totalHeight += rowStride;
-          totalHeight += rowHeights[row] || 0;
+        var cardWidth = 176;
+        if (details[0] && details[0].offsetWidth > 0) {
+          cardWidth = details[0].offsetWidth;
         }
-        detailsSection.style.minHeight = (totalHeight + 8) + 'px';
+
+        var cardXs = resolveGanttCardPositions(anchorXs, cardWidth, bodyWidth);
+
+        details.forEach(function(detail, index) {
+          if (detail.dataset.cardX !== undefined && detail.dataset.cardX !== '') {
+            cardXs[index] = (parseFloat(detail.dataset.cardX) / 100) * bodyWidth;
+          }
+          detail.style.left = (cardXs[index] / bodyWidth * 100) + '%';
+          detail.style.top = '0';
+        });
+
+        var maxCardHeight = 0;
+        details.forEach(function(detail) {
+          maxCardHeight = Math.max(maxCardHeight, detail.offsetHeight);
+        });
+        detailsSection.style.minHeight = (maxCardHeight + 4) + 'px';
 
         var bodyRect = body.getBoundingClientRect();
         svg.setAttribute('width', bodyWidth);
@@ -621,17 +605,14 @@
 
         bars.forEach(function(bar, index) {
           var detail = details[index];
-          var placement = placements[index];
-          if (!detail || !placement) return;
+          if (!detail) return;
 
           var barRect = bar.getBoundingClientRect();
-          var cardRect = detail.getBoundingClientRect();
           var barX = barRect.left + barRect.width / 2 - bodyRect.left;
           var barY = barRect.bottom - bodyRect.top;
-          var cardX = placement.x;
-          var cardY = cardRect.top - bodyRect.top;
-          var midY = barY + 10 + placement.row * 8;
-          if (midY > cardY - 8) midY = barY + (cardY - barY) * 0.42;
+          var cardX = cardXs[index];
+          var cardY = detail.getBoundingClientRect().top - bodyRect.top;
+          var midY = barY + Math.max(10, (cardY - barY) * 0.4);
           var isCurrent = bar.classList.contains('current');
           var path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
           path.setAttribute('d',
@@ -672,73 +653,6 @@
           cardXs[originalIndex] = sorted[sortedIndex];
         });
         return cardXs;
-      }
-
-      function resolveGanttCardPlacements(anchorXs, cardWidths, containerWidth) {
-        var margin = 16;
-        var rowStride = 88;
-        var count = anchorXs.length;
-        var order = anchorXs.map(function(_, index) { return index; });
-        order.sort(function(a, b) { return anchorXs[a] - anchorXs[b]; });
-
-        var placements = new Array(count);
-        var rows = [];
-
-        order.forEach(function(itemIndex) {
-          var width = cardWidths[itemIndex];
-          var half = width / 2;
-          var idealX = anchorXs[itemIndex];
-          var placed = false;
-
-          for (var row = 0; row < rows.length; row++) {
-            var rowXs = rows[row].map(function(entry) { return entry.x; });
-            var rowWidths = rows[row].map(function(entry) { return entry.width; });
-            var maxWidth = Math.max.apply(null, rowWidths);
-            var trialXs = resolveGanttCardPositions(
-              rowXs.concat([idealX]),
-              maxWidth,
-              containerWidth
-            );
-            var trialX = trialXs[trialXs.length - 1];
-            var trialLeft = trialX - half;
-            var trialRight = trialX + half;
-            var collision = false;
-
-            rows[row].forEach(function(entry) {
-              var entryLeft = entry.x - entry.width / 2;
-              var entryRight = entry.x + entry.width / 2;
-              if (!(trialRight + margin < entryLeft || trialLeft > entryRight + margin)) {
-                collision = true;
-              }
-            });
-
-            if (!collision) {
-              rows[row].push({ index: itemIndex, x: trialX, width: width });
-              placements[itemIndex] = { x: trialX, row: row, rowStride: rowStride };
-              placed = true;
-              break;
-            }
-          }
-
-          if (!placed) {
-            rows.push([{ index: itemIndex, x: idealX, width: width }]);
-            placements[itemIndex] = { x: idealX, row: rows.length - 1, rowStride: rowStride };
-          }
-        });
-
-        rows.forEach(function(row, rowIndex) {
-          if (row.length === 0) return;
-          var rowAnchors = row.map(function(entry) { return anchorXs[entry.index]; });
-          var rowWidth = Math.max.apply(null, row.map(function(entry) { return entry.width; }));
-          var rowXs = resolveGanttCardPositions(rowAnchors, rowWidth, containerWidth);
-          row.forEach(function(entry, entryIndex) {
-            entry.x = rowXs[entryIndex];
-            placements[entry.index].x = rowXs[entryIndex];
-            placements[entry.index].row = rowIndex;
-          });
-        });
-
-        return placements;
       }
 
       layoutProjectGantt();

@@ -304,10 +304,8 @@ h3 a:hover {
 }
 
 .gantt-scroll {
-  height: auto;
-  max-height: 42em;
   overflow-x: auto;
-  overflow-y: auto;
+  overflow-y: hidden;
   border: 1px solid #e2e6ea;
   border-radius: 8px;
   background: #fff;
@@ -416,7 +414,7 @@ h3 a:hover {
 .gantt-bridge {
   position: relative;
   z-index: 4;
-  padding-top: 3em;
+  padding-top: 1.25em;
 }
 
 .gantt-bars .gantt-project {
@@ -437,8 +435,8 @@ h3 a:hover {
 .gantt-detail {
   position: absolute;
   top: 0;
-  width: 11.5em;
-  margin-left: -5.75em;
+  width: 10.5em;
+  margin-left: -5.25em;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -495,7 +493,7 @@ h3 a:hover {
 }
 
 .gantt-card h3 {
-  font-size: 0.92em;
+  font-size: 0.86em;
   font-weight: 700;
   line-height: 1.35;
   margin-bottom: 0.2em;
@@ -503,7 +501,7 @@ h3 a:hover {
 }
 
 .gantt-card p {
-  font-size: 0.82em;
+  font-size: 0.78em;
   line-height: 1.4;
   color: #5a5560;
 }
