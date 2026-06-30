@@ -298,7 +298,9 @@
             <div class="gantt-canvas" data-range-start="2020-09" data-range-end="2026-06">
               <div class="gantt-axis" aria-hidden="true"></div>
 
-              <div class="gantt-bars">
+              <div class="gantt-body">
+                <svg class="gantt-connectors" aria-hidden="true"></svg>
+                <div class="gantt-bars">
                 <div class="gantt-project" data-start="2020-09" data-end="2024-02">
                   <div class="gantt-bar-track">
                     <div class="gantt-bar past">
@@ -346,11 +348,11 @@
                     </div>
                   </div>
                 </div>
-              </div>
+                </div>
 
-              <div class="gantt-details">
+                <div class="gantt-bridge">
+                  <div class="gantt-details">
                 <div class="gantt-detail">
-                  <div class="gantt-stem"></div>
                   <div class="gantt-card">
                     <h3>Mobile Robot Systems in Challenging Environments</h3>
                     <p>Motion planning and control in forests and plateaus. F3DMP and SCOML frameworks.</p>
@@ -358,7 +360,6 @@
                 </div>
 
                 <div class="gantt-detail">
-                  <div class="gantt-stem"></div>
                   <div class="gantt-card">
                     <h3>Self-Driving Car for Plateau Environment</h3>
                     <p>Autonomous driving without HD maps using LiDAR, cameras, and GPS.</p>
@@ -366,7 +367,6 @@
                 </div>
 
                 <div class="gantt-detail current">
-                  <div class="gantt-stem"></div>
                   <div class="gantt-card">
                     <h3>Air-Ground Collaborative Exploration Systems</h3>
                     <p>Heterogeneous UAV and ground robots for large-scale exploration. <span class="gantt-badge">ongoing</span></p>
@@ -374,7 +374,6 @@
                 </div>
 
                 <div class="gantt-detail">
-                  <div class="gantt-stem"></div>
                   <div class="gantt-card">
                     <h3>Pure Neural Drone Flying with Optical Chip</h3>
                     <p>End-to-end neural flight stack replacing traditional planning and PX4 pipelines.</p>
@@ -382,7 +381,6 @@
                 </div>
 
                 <div class="gantt-detail">
-                  <div class="gantt-stem"></div>
                   <div class="gantt-card">
                     <h3>Underwater Robot Sonar Denoising</h3>
                     <p>Sonar-based object detection with domain-space alignment and a new dataset.</p>
@@ -390,10 +388,12 @@
                 </div>
 
                 <div class="gantt-detail current">
-                  <div class="gantt-stem"></div>
                   <div class="gantt-card">
                     <h3>Coordinate Humanoid Whole Body Control</h3>
                     <p>RL whole-body control for Unitree G1 and custom humanoid platforms. <span class="gantt-badge">ongoing</span></p>
+                  </div>
+                </div>
+                </div>
                   </div>
                 </div>
               </div>
@@ -547,8 +547,7 @@
 
         canvas.querySelectorAll('.gantt-bars .gantt-project').forEach(function(project, index) {
           var bar = project.querySelector('.gantt-bar');
-          var detail = canvas.querySelectorAll('.gantt-details .gantt-detail')[index];
-          if (!bar || !detail) return;
+          if (!bar) return;
 
           var projectStart = parseGanttMonth(project.dataset.start);
           var projectEnd = parseGanttMonth(project.dataset.end);
@@ -560,22 +559,100 @@
 
           bar.style.left = left + '%';
           bar.style.width = width + '%';
-          detail.style.left = (left + width / 2) + '%';
+          bar.dataset.anchor = (left + width / 2);
         });
 
+        var body = canvas.querySelector('.gantt-body');
         var detailsSection = canvas.querySelector('.gantt-details');
         var details = canvas.querySelectorAll('.gantt-details .gantt-detail');
-        var maxHeight = 0;
-        details.forEach(function(detail) {
-          maxHeight = Math.max(maxHeight, detail.offsetHeight);
+        var bars = canvas.querySelectorAll('.gantt-bars .gantt-bar');
+        var svg = canvas.querySelector('.gantt-connectors');
+        if (!body || !detailsSection || !svg) return;
+
+        var bodyWidth = body.offsetWidth;
+        var cardWidth = details[0] ? details[0].offsetWidth : 184;
+        if (cardWidth === 0) cardWidth = 184;
+
+        var anchorXs = [];
+        bars.forEach(function(bar) {
+          anchorXs.push((parseFloat(bar.dataset.anchor) / 100) * bodyWidth);
         });
-        if (detailsSection && maxHeight > 0) {
-          detailsSection.style.minHeight = maxHeight + 'px';
+
+        var cardXs = resolveGanttCardPositions(anchorXs, cardWidth, bodyWidth);
+
+        details.forEach(function(detail, index) {
+          detail.style.left = (cardXs[index] / bodyWidth * 100) + '%';
+        });
+
+        detailsSection.style.minHeight = '';
+        var maxCardHeight = 0;
+        details.forEach(function(detail) {
+          maxCardHeight = Math.max(maxCardHeight, detail.offsetHeight);
+        });
+        detailsSection.style.minHeight = (maxCardHeight + 8) + 'px';
+
+        var bodyRect = body.getBoundingClientRect();
+        svg.setAttribute('width', bodyWidth);
+        svg.setAttribute('height', body.offsetHeight);
+        svg.innerHTML = '';
+
+        bars.forEach(function(bar, index) {
+          var detail = details[index];
+          if (!detail) return;
+
+          var barRect = bar.getBoundingClientRect();
+          var cardRect = detail.getBoundingClientRect();
+          var barX = barRect.left + barRect.width / 2 - bodyRect.left;
+          var barY = barRect.bottom - bodyRect.top;
+          var cardX = cardRect.left + cardRect.width / 2 - bodyRect.left;
+          var cardY = cardRect.top - bodyRect.top;
+          var midY = barY + 10 + index * 9;
+          if (midY > cardY - 8) midY = barY + (cardY - barY) * 0.42;
+          var isCurrent = bar.classList.contains('current');
+          var path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+          path.setAttribute('d',
+            'M' + barX + ',' + barY +
+            ' L' + barX + ',' + midY +
+            ' L' + cardX + ',' + midY +
+            ' L' + cardX + ',' + cardY
+          );
+          path.setAttribute('class', isCurrent ? 'gantt-connector current' : 'gantt-connector');
+          svg.appendChild(path);
+        });
+      }
+
+      function resolveGanttCardPositions(anchorXs, cardWidth, containerWidth) {
+        var margin = 10;
+        var half = cardWidth / 2;
+        var count = anchorXs.length;
+        var order = anchorXs.map(function(_, index) { return index; });
+        order.sort(function(a, b) { return anchorXs[a] - anchorXs[b]; });
+
+        var sorted = order.map(function(index) { return anchorXs[index]; });
+        var index;
+
+        for (index = 1; index < count; index++) {
+          var minPos = sorted[index - 1] + cardWidth + margin;
+          if (sorted[index] < minPos) sorted[index] = minPos;
         }
+        for (index = count - 2; index >= 0; index--) {
+          var maxPos = sorted[index + 1] - cardWidth - margin;
+          if (sorted[index] > maxPos) sorted[index] = maxPos;
+        }
+        for (index = 0; index < count; index++) {
+          sorted[index] = Math.max(half + margin, Math.min(containerWidth - half - margin, sorted[index]));
+        }
+
+        var cardXs = [];
+        order.forEach(function(originalIndex, sortedIndex) {
+          cardXs[originalIndex] = sorted[sortedIndex];
+        });
+        return cardXs;
       }
 
       layoutProjectGantt();
       window.addEventListener('resize', layoutProjectGantt);
+      requestAnimationFrame(layoutProjectGantt);
 
     </script>
   </body>
