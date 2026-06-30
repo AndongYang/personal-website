@@ -299,12 +299,13 @@ h3 a:hover {
 /* Projects — Gantt-style horizontal timeline. */
 
 .project-gantt-wrap {
-  margin-top: 1.5em;
+  margin-top: 0.5em;
+  margin-bottom: 1.5em;
 }
 
 .gantt-scroll {
   height: auto;
-  max-height: 32em;
+  max-height: 42em;
   overflow-x: auto;
   overflow-y: auto;
   border: 1px solid #e2e6ea;
@@ -332,8 +333,8 @@ h3 a:hover {
 
 .gantt-axis {
   position: relative;
-  height: 1.75em;
-  margin-bottom: 0.35em;
+  height: 2.6em;
+  margin-bottom: 0.5em;
   border-bottom: 2px solid #e2e6ea;
 }
 
@@ -342,17 +343,42 @@ h3 a:hover {
   bottom: 0;
   transform: translateX(-50%);
   border-left: 1px solid #e8ecef;
-  height: 1.75em;
-  padding-left: 0.35em;
 }
 
-.gantt-tick span {
+.gantt-tick-month {
+  height: 0.35em;
+  border-left-color: #eef1f3;
+}
+
+.gantt-tick-quarter {
+  height: 0.85em;
+  border-left-color: #d5dce3;
+}
+
+.gantt-tick-quarter span {
+  position: absolute;
+  bottom: 0.95em;
+  left: 0.2em;
+  font-size: 0.62em;
+  color: #a0a8b0;
+  white-space: nowrap;
+}
+
+.gantt-tick-year {
+  height: 2.4em;
+  border-left: 2px solid #3EB489;
+  opacity: 0.45;
+}
+
+.gantt-tick-year span {
   position: absolute;
   top: 0;
   left: 0.35em;
   font-size: 0.78em;
-  color: #a0a8b0;
+  font-weight: 500;
+  color: #3EB489;
   white-space: nowrap;
+  opacity: 1;
 }
 
 .gantt-bars {
@@ -379,8 +405,8 @@ h3 a:hover {
 .gantt-detail {
   position: absolute;
   top: 0;
-  width: 13em;
-  margin-left: -6.5em;
+  width: 11.5em;
+  margin-left: -5.75em;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -425,6 +451,16 @@ h3 a:hover {
 
 .gantt-bar.current {
   background: #3EB489;
+}
+
+.gantt-bar.current::after {
+  content: '';
+  position: absolute;
+  right: -3px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: 5px solid transparent;
+  border-left-color: #3EB489;
 }
 
 .gantt-bar-label {
