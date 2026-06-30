@@ -17,70 +17,49 @@
 <body>
   <div class="page">
     <h1>Gantt-style project timeline</h1>
-    <p class="note">Shared time bar on top · horizontal bars show duration · vertical stem to description card below · scroll left → right.</p>
+    <p class="note">All bars on top · all description cards in one row below · stems link each bar to its card.</p>
 
     <div class="project-gantt-wrap">
       <div class="gantt-scroll">
         <div class="gantt-canvas" data-range-start="2022-01" data-range-end="2025-06">
           <div class="gantt-axis" aria-hidden="true"></div>
 
-          <div class="gantt-project" data-start="2022-01" data-end="2023-06">
-            <div class="gantt-bar-track">
-              <div class="gantt-bar past"><span class="gantt-bar-label">Self-driving car</span></div>
+          <div class="gantt-bars">
+            <div class="gantt-project" data-start="2022-01" data-end="2023-06">
+              <div class="gantt-bar-track"><div class="gantt-bar past"><span class="gantt-bar-label">Self-driving car</span></div></div>
             </div>
-            <div class="gantt-detail">
-              <div class="gantt-stem"></div>
-              <div class="gantt-card">
-                <h3>Building a self-driving car</h3>
-                <p>Perception, planning, and control on a mobile robot platform.</p>
-              </div>
+            <div class="gantt-project" data-start="2023-03" data-end="2024-02">
+              <div class="gantt-bar-track"><div class="gantt-bar past"><span class="gantt-bar-label">Path planning</span></div></div>
             </div>
-          </div>
-
-          <div class="gantt-project" data-start="2023-03" data-end="2024-02">
-            <div class="gantt-bar-track">
-              <div class="gantt-bar past"><span class="gantt-bar-label">Path planning</span></div>
+            <div class="gantt-project" data-start="2024-06" data-end="2024-12">
+              <div class="gantt-bar-track"><div class="gantt-bar past"><span class="gantt-bar-label">Scene reconstruction</span></div></div>
             </div>
-            <div class="gantt-detail">
-              <div class="gantt-stem"></div>
-              <div class="gantt-card">
-                <h3>Global path planning based on satellite images</h3>
-                <p>Long-range navigation using overhead imagery.</p>
-              </div>
+            <div class="gantt-project" data-start="2024-04" data-end="2025-06">
+              <div class="gantt-bar-track"><div class="gantt-bar current"><span class="gantt-bar-label">Multi-robot system</span></div></div>
             </div>
           </div>
 
-          <div class="gantt-project" data-start="2024-06" data-end="2024-12">
-            <div class="gantt-bar-track">
-              <div class="gantt-bar past"><span class="gantt-bar-label">Scene reconstruction</span></div>
+          <div class="gantt-details">
+            <div class="gantt-detail">
+              <div class="gantt-stem"></div>
+              <div class="gantt-card"><h3>Building a self-driving car</h3><p>Perception, planning, and control.</p></div>
             </div>
             <div class="gantt-detail">
               <div class="gantt-stem"></div>
-              <div class="gantt-card">
-                <h3>Large-scale scene reconstruction</h3>
-                <p>Gaussian splatting for outdoor mapping.</p>
-                <div class="links"><a href="#">Demo</a>&nbsp;·&nbsp;<a href="#">Web</a></div>
-              </div>
-            </div>
-          </div>
-
-          <div class="gantt-project" data-start="2024-04" data-end="2025-06">
-            <div class="gantt-bar-track">
-              <div class="gantt-bar current"><span class="gantt-bar-label">Multi-robot system</span></div>
+              <div class="gantt-card"><h3>Global path planning</h3><p>Navigation from satellite imagery.</p></div>
             </div>
             <div class="gantt-detail">
               <div class="gantt-stem"></div>
-              <div class="gantt-card">
-                <h3>Multi-robot coordination <span class="gantt-badge">ongoing</span></h3>
-                <p>Decentralized planning for heterogeneous teams.</p>
-                <div class="links"><a href="#">Project page</a></div>
-              </div>
+              <div class="gantt-card"><h3>Scene reconstruction</h3><p>Gaussian splatting.</p></div>
+            </div>
+            <div class="gantt-detail current">
+              <div class="gantt-stem"></div>
+              <div class="gantt-card"><h3>Multi-robot <span class="gantt-badge">ongoing</span></h3><p>Decentralized coordination.</p></div>
             </div>
           </div>
 
         </div>
       </div>
-      <p class="gantt-scroll-hint">Scroll horizontally to explore the project timeline</p>
     </div>
   </div>
 
@@ -110,9 +89,11 @@
         axis.appendChild(tick);
       }
 
-      canvas.querySelectorAll('.gantt-project').forEach(function(project) {
+      canvas.querySelectorAll('.gantt-bars .gantt-project').forEach(function(project, index) {
         var bar = project.querySelector('.gantt-bar');
-        var detail = project.querySelector('.gantt-detail');
+        var detail = canvas.querySelectorAll('.gantt-details .gantt-detail')[index];
+        if (!bar || !detail) return;
+
         var projectStart = parseGanttMonth(project.dataset.start);
         var projectEnd = parseGanttMonth(project.dataset.end);
         projectEnd.setMonth(projectEnd.getMonth() + 1);
@@ -124,6 +105,12 @@
         bar.style.width = width + '%';
         detail.style.left = (left + width / 2) + '%';
       });
+
+      var detailsSection = canvas.querySelector('.gantt-details');
+      var details = canvas.querySelectorAll('.gantt-details .gantt-detail');
+      var maxHeight = 0;
+      details.forEach(function(detail) { maxHeight = Math.max(maxHeight, detail.offsetHeight); });
+      if (detailsSection && maxHeight > 0) detailsSection.style.minHeight = maxHeight + 'px';
     }
 
     layoutProjectGantt();

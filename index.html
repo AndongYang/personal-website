@@ -302,12 +302,41 @@
             <div class="gantt-canvas" data-range-start="2022-01" data-range-end="2025-06">
               <div class="gantt-axis" aria-hidden="true"></div>
 
-              <div class="gantt-project" data-start="2022-01" data-end="2023-06">
-                <div class="gantt-bar-track">
-                  <div class="gantt-bar past">
-                    <span class="gantt-bar-label">Self-driving car</span>
+              <div class="gantt-bars">
+                <div class="gantt-project" data-start="2022-01" data-end="2023-06">
+                  <div class="gantt-bar-track">
+                    <div class="gantt-bar past">
+                      <span class="gantt-bar-label">Self-driving car</span>
+                    </div>
                   </div>
                 </div>
+
+                <div class="gantt-project" data-start="2023-03" data-end="2024-02">
+                  <div class="gantt-bar-track">
+                    <div class="gantt-bar past">
+                      <span class="gantt-bar-label">Path planning</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="gantt-project" data-start="2024-06" data-end="2024-12">
+                  <div class="gantt-bar-track">
+                    <div class="gantt-bar past">
+                      <span class="gantt-bar-label">Scene reconstruction</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="gantt-project" data-start="2024-04" data-end="2025-06">
+                  <div class="gantt-bar-track">
+                    <div class="gantt-bar current">
+                      <span class="gantt-bar-label">Multi-robot system</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="gantt-details">
                 <div class="gantt-detail">
                   <div class="gantt-stem"></div>
                   <div class="gantt-card">
@@ -315,14 +344,7 @@
                     <p>Perception, planning, and control on a mobile robot platform.</p>
                   </div>
                 </div>
-              </div>
 
-              <div class="gantt-project" data-start="2023-03" data-end="2024-02">
-                <div class="gantt-bar-track">
-                  <div class="gantt-bar past">
-                    <span class="gantt-bar-label">Path planning</span>
-                  </div>
-                </div>
                 <div class="gantt-detail">
                   <div class="gantt-stem"></div>
                   <div class="gantt-card">
@@ -330,14 +352,7 @@
                     <p>Long-range navigation using overhead imagery for rough terrain.</p>
                   </div>
                 </div>
-              </div>
 
-              <div class="gantt-project" data-start="2024-06" data-end="2024-12">
-                <div class="gantt-bar-track">
-                  <div class="gantt-bar past">
-                    <span class="gantt-bar-label">Scene reconstruction</span>
-                  </div>
-                </div>
                 <div class="gantt-detail">
                   <div class="gantt-stem"></div>
                   <div class="gantt-card">
@@ -345,15 +360,8 @@
                     <p>Gaussian splatting for outdoor multi-robot mapping.</p>
                   </div>
                 </div>
-              </div>
 
-              <div class="gantt-project" data-start="2024-04" data-end="2025-06">
-                <div class="gantt-bar-track">
-                  <div class="gantt-bar current">
-                    <span class="gantt-bar-label">Multi-robot system</span>
-                  </div>
-                </div>
-                <div class="gantt-detail">
+                <div class="gantt-detail current">
                   <div class="gantt-stem"></div>
                   <div class="gantt-card">
                     <h3>Multi-robot coordination <span class="gantt-badge">ongoing</span></h3>
@@ -491,9 +499,11 @@
           axis.appendChild(tick);
         }
 
-        canvas.querySelectorAll('.gantt-project').forEach(function(project) {
+        canvas.querySelectorAll('.gantt-bars .gantt-project').forEach(function(project, index) {
           var bar = project.querySelector('.gantt-bar');
-          var detail = project.querySelector('.gantt-detail');
+          var detail = canvas.querySelectorAll('.gantt-details .gantt-detail')[index];
+          if (!bar || !detail) return;
+
           var projectStart = parseGanttMonth(project.dataset.start);
           var projectEnd = parseGanttMonth(project.dataset.end);
           projectEnd.setMonth(projectEnd.getMonth() + 1);
@@ -506,6 +516,16 @@
           bar.style.width = width + '%';
           detail.style.left = (left + width / 2) + '%';
         });
+
+        var detailsSection = canvas.querySelector('.gantt-details');
+        var details = canvas.querySelectorAll('.gantt-details .gantt-detail');
+        var maxHeight = 0;
+        details.forEach(function(detail) {
+          maxHeight = Math.max(maxHeight, detail.offsetHeight);
+        });
+        if (detailsSection && maxHeight > 0) {
+          detailsSection.style.minHeight = maxHeight + 'px';
+        }
       }
 
       layoutProjectGantt();

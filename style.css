@@ -303,9 +303,10 @@ h3 a:hover {
 }
 
 .gantt-scroll {
-  height: 28em;
+  height: auto;
+  max-height: 32em;
   overflow-x: auto;
-  overflow-y: hidden;
+  overflow-y: auto;
   border: 1px solid #e2e6ea;
   border-radius: 8px;
   background: #fff;
@@ -354,9 +355,52 @@ h3 a:hover {
   white-space: nowrap;
 }
 
-.gantt-project {
+.gantt-bars {
+  margin-bottom: 0;
+}
+
+.gantt-bars .gantt-project {
   position: relative;
   margin-bottom: 0.35em;
+}
+
+.gantt-bars .gantt-project:last-child {
+  margin-bottom: 0;
+}
+
+.gantt-details {
+  position: relative;
+  margin-top: 0.75em;
+  padding-top: 0.25em;
+  min-height: 9em;
+  border-top: 1px solid #e8ecef;
+}
+
+.gantt-detail {
+  position: absolute;
+  top: 0;
+  width: 13em;
+  margin-left: -6.5em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.gantt-stem {
+  width: 1px;
+  height: 1.25em;
+  background: #d5dce3;
+  flex-shrink: 0;
+}
+
+.gantt-detail.current .gantt-stem {
+  background: #3EB489;
+  opacity: 0.55;
+}
+
+.gantt-card {
+  text-align: center;
+  padding: 0.35em 0.25em 0.5em;
 }
 
 .gantt-bar-track {
@@ -390,30 +434,6 @@ h3 a:hover {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-}
-
-.gantt-detail {
-  position: relative;
-  width: 13em;
-  margin-left: -6.5em;
-  margin-top: 0.15em;
-}
-
-.gantt-stem {
-  width: 1px;
-  height: 1.1em;
-  background: #d5dce3;
-  margin: 0 auto;
-}
-
-.gantt-project:has(.gantt-bar.current) .gantt-stem {
-  background: #3EB489;
-  opacity: 0.55;
-}
-
-.gantt-card {
-  text-align: center;
-  padding: 0.35em 0.25em 0;
 }
 
 .gantt-card h3 {
