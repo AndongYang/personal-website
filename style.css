@@ -406,9 +406,10 @@ h3 a:hover {
   stroke-width: 1.5;
 }
 
-.gantt-connectors .gantt-connector.current {
+.gantt-connectors .gantt-connector.ongoing {
   stroke: #3EB489;
-  stroke-opacity: 0.55;
+  stroke-opacity: 0.6;
+  stroke-dasharray: 5 4;
 }
 
 .gantt-bridge {
@@ -469,18 +470,30 @@ h3 a:hover {
   box-sizing: border-box;
 }
 
-.gantt-bar.current {
-  background: #3EB489;
+.gantt-bar.ongoing {
+  background-color: #3EB489;
+  background-image: repeating-linear-gradient(
+    -45deg,
+    rgba(255, 255, 255, 0),
+    rgba(255, 255, 255, 0) 5px,
+    rgba(255, 255, 255, 0.22) 5px,
+    rgba(255, 255, 255, 0.22) 10px
+  );
+  border-top-right-radius: 2px;
+  border-bottom-right-radius: 2px;
+  padding-right: 1.4em;
 }
 
-.gantt-bar.current::after {
-  content: '';
+.gantt-bar.ongoing::after {
+  content: '→';
   position: absolute;
-  right: -3px;
+  right: 0.25em;
   top: 50%;
-  transform: translateY(-50%);
-  border: 5px solid transparent;
-  border-left-color: #3EB489;
+  transform: translateY(-52%);
+  font-size: 0.75em;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1;
 }
 
 .gantt-bar-label {
@@ -510,6 +523,24 @@ h3 a:hover {
   font-size: 0.8em;
   color: #a0a8b0;
   margin-top: 0.2em;
+}
+
+.gantt-detail.ongoing .gantt-card {
+  border-left: 3px solid #3EB489;
+  padding-left: 0.45em;
+}
+
+.gantt-detail.ongoing .gantt-card h3::after {
+  content: 'ongoing';
+  display: inline-block;
+  font-size: 0.68em;
+  font-weight: 500;
+  color: #3EB489;
+  background: #e8f7f1;
+  padding: 0.05em 0.4em;
+  border-radius: 3px;
+  margin-left: 0.35em;
+  vertical-align: middle;
 }
 
 .gantt-badge {

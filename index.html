@@ -320,7 +320,7 @@
 
                   <div class="gantt-project" data-start="2024-01" data-end="2027-03">
                     <div class="gantt-bar-track">
-                      <div class="gantt-bar current">
+                      <div class="gantt-bar ongoing">
                         <span class="gantt-bar-label">Air-ground exploration</span>
                       </div>
                     </div>
@@ -344,7 +344,7 @@
 
                   <div class="gantt-project" data-start="2025-11" data-end="2027-03">
                     <div class="gantt-bar-track">
-                      <div class="gantt-bar current">
+                      <div class="gantt-bar ongoing">
                         <span class="gantt-bar-label">Humanoid whole-body control</span>
                       </div>
                     </div>
@@ -352,47 +352,47 @@
                 </div>
 
                 <div class="gantt-bridge">
-                  <!-- Optional: add data-card-x="45" on any .gantt-detail to place that card manually (percent along timeline). -->
+                  <!-- Card position: set data-card-x on each .gantt-detail (0–100, percent along timeline). -->
                   <div class="gantt-details">
-                    <div class="gantt-detail">
+                    <div class="gantt-detail" data-card-x="22">
                       <div class="gantt-card">
                         <h3>Mobile Robot Systems in Challenging Environments</h3>
                         <p>Motion planning and control in forests and plateaus. F3DMP and SCOML frameworks.</p>
                       </div>
                     </div>
 
-                    <div class="gantt-detail">
+                    <div class="gantt-detail" data-card-x="30">
                       <div class="gantt-card">
                         <h3>Self-Driving Car for Plateau Environment</h3>
                         <p>Autonomous driving without HD maps using LiDAR, cameras, and GPS.</p>
                       </div>
                     </div>
 
-                    <div class="gantt-detail current">
+                    <div class="gantt-detail ongoing" data-card-x="50">
                       <div class="gantt-card">
                         <h3>Air-Ground Collaborative Exploration Systems</h3>
-                        <p>Heterogeneous UAV and ground robots for large-scale exploration. <span class="gantt-badge">ongoing</span></p>
+                        <p>Heterogeneous UAV and ground robots for large-scale exploration.</p>
                       </div>
                     </div>
 
-                    <div class="gantt-detail">
+                    <div class="gantt-detail" data-card-x="72">
                       <div class="gantt-card">
                         <h3>Pure Neural Drone Flying with Optical Chip</h3>
                         <p>End-to-end neural flight stack replacing traditional planning and PX4 pipelines.</p>
                       </div>
                     </div>
 
-                    <div class="gantt-detail">
+                    <div class="gantt-detail" data-card-x="78">
                       <div class="gantt-card">
                         <h3>Underwater Robot Sonar Denoising</h3>
                         <p>Sonar-based object detection with domain-space alignment and a new dataset.</p>
                       </div>
                     </div>
 
-                    <div class="gantt-detail current">
+                    <div class="gantt-detail ongoing" data-card-x="86">
                       <div class="gantt-card">
                         <h3>Coordinate Humanoid Whole Body Control</h3>
-                        <p>RL whole-body control for Unitree G1 and custom humanoid platforms. <span class="gantt-badge">ongoing</span></p>
+                        <p>RL whole-body control for Unitree G1 and custom humanoid platforms.</p>
                       </div>
                     </div>
                   </div>
@@ -572,23 +572,14 @@
         var bodyWidth = body.offsetWidth;
         if (bodyWidth === 0) bodyWidth = canvas.offsetWidth;
 
-        var anchorXs = [];
-        bars.forEach(function(bar) {
-          anchorXs.push((parseFloat(bar.dataset.anchor) / 100) * bodyWidth);
-        });
-
-        var cardWidth = 176;
-        if (details[0] && details[0].offsetWidth > 0) {
-          cardWidth = details[0].offsetWidth;
-        }
-
-        var cardXs = resolveGanttCardPositions(anchorXs, cardWidth, bodyWidth);
-
         details.forEach(function(detail, index) {
-          if (detail.dataset.cardX !== undefined && detail.dataset.cardX !== '') {
-            cardXs[index] = (parseFloat(detail.dataset.cardX) / 100) * bodyWidth;
+          var bar = bars[index];
+          var cardPercent = parseFloat(detail.dataset.cardX);
+          if (isNaN(cardPercent) && bar) {
+            cardPercent = parseFloat(bar.dataset.anchor);
           }
-          detail.style.left = (cardXs[index] / bodyWidth * 100) + '%';
+          if (isNaN(cardPercent)) cardPercent = 50;
+          detail.style.left = cardPercent + '%';
           detail.style.top = '0';
         });
 
@@ -610,10 +601,11 @@
           var barRect = bar.getBoundingClientRect();
           var barX = barRect.left + barRect.width / 2 - bodyRect.left;
           var barY = barRect.bottom - bodyRect.top;
-          var cardX = cardXs[index];
-          var cardY = detail.getBoundingClientRect().top - bodyRect.top;
+          var cardRect = detail.getBoundingClientRect();
+          var cardX = cardRect.left + cardRect.width / 2 - bodyRect.left;
+          var cardY = cardRect.top - bodyRect.top;
           var midY = barY + Math.max(10, (cardY - barY) * 0.4);
-          var isCurrent = bar.classList.contains('current');
+          var isOngoing = bar.classList.contains('ongoing');
           var path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
           path.setAttribute('d',
             'M' + barX + ',' + barY +
@@ -621,38 +613,9 @@
             ' L' + cardX + ',' + midY +
             ' L' + cardX + ',' + cardY
           );
-          path.setAttribute('class', isCurrent ? 'gantt-connector current' : 'gantt-connector');
+          path.setAttribute('class', isOngoing ? 'gantt-connector ongoing' : 'gantt-connector');
           svg.appendChild(path);
         });
-      }
-
-      function resolveGanttCardPositions(anchorXs, cardWidth, containerWidth) {
-        var margin = 16;
-        var half = cardWidth / 2;
-        var count = anchorXs.length;
-        var order = anchorXs.map(function(_, index) { return index; });
-        order.sort(function(a, b) { return anchorXs[a] - anchorXs[b]; });
-
-        var sorted = order.map(function(index) { return anchorXs[index]; });
-        var index;
-
-        for (index = 1; index < count; index++) {
-          var minPos = sorted[index - 1] + cardWidth + margin;
-          if (sorted[index] < minPos) sorted[index] = minPos;
-        }
-        for (index = count - 2; index >= 0; index--) {
-          var maxPos = sorted[index + 1] - cardWidth - margin;
-          if (sorted[index] > maxPos) sorted[index] = maxPos;
-        }
-        for (index = 0; index < count; index++) {
-          sorted[index] = Math.max(half + margin, Math.min(containerWidth - half - margin, sorted[index]));
-        }
-
-        var cardXs = [];
-        order.forEach(function(originalIndex, sortedIndex) {
-          cardXs[originalIndex] = sorted[sortedIndex];
-        });
-        return cardXs;
       }
 
       layoutProjectGantt();
