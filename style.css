@@ -324,8 +324,8 @@ h3 a:hover {
 
 .gantt-canvas {
   position: relative;
-  min-width: 72em;
-  width: 100%;
+  width: max-content;
+  min-width: 100%;
   padding: 1.25em 1.5em 1em;
 }
 

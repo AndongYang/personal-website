@@ -475,11 +475,11 @@
         var filterValue = $( this ).attr('data-filter');
         localStorage.setItem('filterValue', filterValue);
         $grid.isotope({ filter: filterValue });
-        $grid.one('layoutComplete', function() {
-          if (filterValue === '.talk') {
-            scheduleGanttLayout();
-          }
-        });
+        if (filterValue === '.talk') {
+          $grid.one('layoutComplete', refreshProjectsGantt);
+          setTimeout(refreshProjectsGantt, 100);
+          setTimeout(refreshProjectsGantt, 300);
+        }
       });
 
       // Change is-checked class on buttons.
@@ -506,11 +506,11 @@
             currButton.classList.remove('is-checked');
           }
         }
-        $grid.one('layoutComplete', function() {
-          if (defaultFilterValue === '.talk') {
-            scheduleGanttLayout();
-          }
-        });
+        if (defaultFilterValue === '.talk') {
+          $grid.one('layoutComplete', refreshProjectsGantt);
+          setTimeout(refreshProjectsGantt, 100);
+          setTimeout(refreshProjectsGantt, 300);
+        }
       }
 
       function toggle_bio() {
@@ -552,6 +552,12 @@
         });
       }
 
+      function refreshProjectsGantt() {
+        scheduleGanttLayout();
+        setTimeout(scheduleGanttLayout, 50);
+        setTimeout(scheduleGanttLayout, 150);
+      }
+
       function parseGanttMonth(value) {
         var parts = value.split('-');
         return new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, 1);
@@ -562,7 +568,7 @@
         if (!canvas || !isGanttVisible()) return;
 
         var body = canvas.querySelector('.gantt-body');
-        if (!body || body.offsetWidth === 0) return;
+        if (!body) return;
 
         var rangeStart = parseGanttMonth(canvas.dataset.rangeStart);
         var rangeEnd = parseGanttMonth(canvas.dataset.rangeEnd);
@@ -614,14 +620,17 @@
           bar.dataset.anchor = (left + width / 2);
         });
 
-        var body = canvas.querySelector('.gantt-body');
         var detailsSection = canvas.querySelector('.gantt-details');
         var details = canvas.querySelectorAll('.gantt-details .gantt-detail');
         var bars = canvas.querySelectorAll('.gantt-bars .gantt-bar');
         var svg = canvas.querySelector('.gantt-connectors');
         if (!detailsSection || !svg) return;
 
-        var bodyWidth = body.offsetWidth;
+        var bodyWidth = body.offsetWidth || canvas.offsetWidth;
+        if (bodyWidth === 0) {
+          scheduleGanttLayout();
+          return;
+        }
 
         details.forEach(function(detail, index) {
           var bar = bars[index];
@@ -669,7 +678,11 @@
         });
       }
 
-      window.addEventListener('resize', scheduleGanttLayout);
+      window.addEventListener('resize', function() {
+        if (isGanttVisible()) {
+          refreshProjectsGantt();
+        }
+      });
 
     </script>
   </body>
