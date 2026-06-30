@@ -352,44 +352,44 @@
                 </div>
 
                 <div class="gantt-bridge">
-                  <!-- Card position: set data-card-x on each .gantt-detail (0–100, percent along timeline). -->
+                  <!-- data-card-x: card position (0–100). data-line-x: connector start (0–100). -->
                   <div class="gantt-details">
-                    <div class="gantt-detail" data-card-x="22">
+                    <div class="gantt-detail" data-card-x="22" data-line-x="26">
                       <div class="gantt-card">
                         <h3>Mobile Robot Systems in Challenging Environments</h3>
                         <p>Motion planning and control in forests and plateaus. F3DMP and SCOML frameworks.</p>
                       </div>
                     </div>
 
-                    <div class="gantt-detail" data-card-x="30">
+                    <div class="gantt-detail" data-card-x="30" data-line-x="30">
                       <div class="gantt-card">
                         <h3>Self-Driving Car for Plateau Environment</h3>
                         <p>Autonomous driving without HD maps using LiDAR, cameras, and GPS.</p>
                       </div>
                     </div>
 
-                    <div class="gantt-detail ongoing" data-card-x="50">
+                    <div class="gantt-detail ongoing" data-card-x="50" data-line-x="76">
                       <div class="gantt-card">
                         <h3>Air-Ground Collaborative Exploration Systems</h3>
                         <p>Heterogeneous UAV and ground robots for large-scale exploration.</p>
                       </div>
                     </div>
 
-                    <div class="gantt-detail" data-card-x="72">
+                    <div class="gantt-detail" data-card-x="72" data-line-x="80">
                       <div class="gantt-card">
                         <h3>Pure Neural Drone Flying with Optical Chip</h3>
                         <p>End-to-end neural flight stack replacing traditional planning and PX4 pipelines.</p>
                       </div>
                     </div>
 
-                    <div class="gantt-detail" data-card-x="78">
+                    <div class="gantt-detail" data-card-x="78" data-line-x="81">
                       <div class="gantt-card">
                         <h3>Underwater Robot Sonar Denoising</h3>
                         <p>Sonar-based object detection with domain-space alignment and a new dataset.</p>
                       </div>
                     </div>
 
-                    <div class="gantt-detail ongoing" data-card-x="86">
+                    <div class="gantt-detail ongoing" data-card-x="86" data-line-x="90">
                       <div class="gantt-card">
                         <h3>Coordinate Humanoid Whole Body Control</h3>
                         <p>RL whole-body control for Unitree G1 and custom humanoid platforms.</p>
@@ -599,8 +599,8 @@
           if (!detail) return;
 
           var barRect = bar.getBoundingClientRect();
-          var barX = barRect.left + barRect.width / 2 - bodyRect.left;
           var barY = barRect.bottom - bodyRect.top;
+          var lineX = (parseFloat(detail.dataset.lineX) / 100) * bodyWidth;
           var cardRect = detail.getBoundingClientRect();
           var cardX = cardRect.left + cardRect.width / 2 - bodyRect.left;
           var cardY = cardRect.top - bodyRect.top;
@@ -608,8 +608,8 @@
           var isOngoing = bar.classList.contains('ongoing');
           var path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
           path.setAttribute('d',
-            'M' + barX + ',' + barY +
-            ' L' + barX + ',' + midY +
+            'M' + lineX + ',' + barY +
+            ' L' + lineX + ',' + midY +
             ' L' + cardX + ',' + midY +
             ' L' + cardX + ',' + cardY
           );
